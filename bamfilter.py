@@ -46,7 +46,7 @@ if submitted:
         if 'insertion' in selected_option:
             reads_use=pd.concat([reads_use,new_df.loc[new_df['5'].str.contains('I')]]) 
         if query:
-            if posorneg ==' In':
+            if posorneg =='In':
                 mask = reads_use.applymap(lambda x: query in str(x).lower()).any(axis=1)
             else:
                mask = reads_use.applymap(lambda x: not query in str(x).lower()).any(axis=1) 
