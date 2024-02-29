@@ -9,12 +9,26 @@ def convert_df(df,topofsam):
     topofsam='\n'.join(topofsam)
     df.rename(columns={'0':topofsam},inplace=True)
     return df.to_csv(index=False,header=False,sep='\t').encode('utf-8')
+def filterdown(reads_use,posorneg,query)    
+    if posorneg =='In':
+        mask = reads_use.map(lambda x: query in str(x).lower()).any(axis=1)
+        reads_use = reads_use[mask] 
+        #st.write(mask)
+    else:
+        mask = reads_use.map(lambda x: query not in str(x).lower()).all(axis=1)
+        #st.write('here')
+        #st.write(mask)
+        reads_use = reads_use[mask]
+    return reads_use
 
 with st.form(key='file upload'):
     # Add form elements
     uploaded_file = st.file_uploader("Upload a sam file")
     selected_option = st.multiselect('Select options for filtering', ['softclip', 'deletion', 'insertion'],['softclip'])
     query = st.text_input("Filter dataframe")
+    query2 = st.text_input("2nd Filter dataframe")
+    query2 = st.text_input("3rd Filter dataframe")
+    query4 = st.text_input("4th Filter dataframe")
     posorneg = st.radio('filter type',['In','Not in'])
     # Add a form submit button
     submitted = st.form_submit_button('Submit')
@@ -46,16 +60,13 @@ if submitted:
         if 'insertion' in selected_option:
             reads_use=pd.concat([reads_use,new_df.loc[new_df['5'].str.contains('I')]]) 
         if query:
-            if posorneg =='In':
-                mask = reads_use.map(lambda x: query in str(x).lower()).any(axis=1)
-                reads_use = reads_use[mask] 
-                st.write(mask)
-            else:
-                mask = reads_use.map(lambda x: query not in str(x).lower()).all(axis=1)
-                st.write('here')
-                st.write(mask)
-                reads_use = reads_use[mask]
-                #reads_use = pd.merge(reads_use,reads_use[mask], how='left') 
+            reads_use=filterdown(reads_use,posorneg,query)
+        if query2:
+            reads_use=filterdown(reads_use,posorneg,query2)
+        if query3:
+            reads_use=filterdown(reads_use,posorneg,query3)
+        if query4:
+            reads_use=filterdown(reads_use,posorneg,query4)            
         st.data_editor(reads_use)
         st.write(reads_use.shape)
         reads_use=convert_df(reads_use,mm)   
