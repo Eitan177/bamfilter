@@ -44,7 +44,7 @@ if submitted:
             reads_use=pd.concat([reads_use,new_df.loc[new_df['5'].str.contains('D')]])  
         if 'insertion' in selected_option:
             reads_use=pd.concat([reads_use,new_df.loc[new_df['5'].str.contains('I')]]) 
-        
+        st.data_editor(reads_use)
         reads_use=convert_df(reads_use,mm)   
-      
+        
         st.download_button('Download filtered sam',reads_use,'filtered.sam','text')
