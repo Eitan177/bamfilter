@@ -53,6 +53,7 @@ if submitted:
                mask = reads_use.applymap(lambda x: query in str(x).lower()).any(axis=1) 
                reads_use = pd.merge(reads_use,reads_use[mask], how='left') 
         st.data_editor(reads_use)
+        st.write(reads_use.shape)
         reads_use=convert_df(reads_use,mm)   
         
         st.download_button('Download filtered sam',reads_use,'filtered.sam','text')
