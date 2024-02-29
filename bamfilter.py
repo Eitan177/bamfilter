@@ -51,7 +51,7 @@ if submitted:
                 reads_use = reads_use[mask] 
             else:
                mask = reads_use.applymap(lambda x: query in str(x).lower()).any(axis=1) 
-               reads_use = pd.merge(reads_use,reads_use[mask], how='left_only') 
+               reads_use = pd.merge(reads_use,reads_use[mask], how='left') 
         st.data_editor(reads_use)
         reads_use=convert_df(reads_use,mm)   
         
