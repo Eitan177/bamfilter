@@ -28,7 +28,7 @@ with st.form(key='file upload'):
     selected_option = st.multiselect('Select options for filtering', ['softclip', 'deletion', 'insertion'],['softclip'])
     query = st.text_input("Filter dataframe")
     query2 = st.text_input("2nd Filter dataframe")
-    query2 = st.text_input("3rd Filter dataframe")
+    query3 = st.text_input("3rd Filter dataframe")
     query4 = st.text_input("4th Filter dataframe")
     posorneg = st.radio('filter type',['In','Not in'])
     # Add a form submit button
