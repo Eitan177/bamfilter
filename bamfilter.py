@@ -51,9 +51,10 @@ if submitted:
                 reads_use = reads_use[mask] 
                 st.write(mask)
             else:
-                mask = reads_use.map(lambda x: query in str(x).lower()).any(axis=1) 
+                mask = reads_use.map(lambda x: not query in str(x).lower())
                 st.write('here')
-                reads_use= reads_use[~reads_use.index.isin(mask)]
+                st.write(mask)
+                reads_use = reads_use[mask]
                 #reads_use = pd.merge(reads_use,reads_use[mask], how='left') 
         st.data_editor(reads_use)
         st.write(reads_use.shape)
