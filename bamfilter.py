@@ -51,7 +51,7 @@ if submitted:
                 reads_use = reads_use[mask] 
                 st.write(mask)
             else:
-                mask = reads_use.map(lambda x: not query in str(x).lower())
+                mask = reads_use.map(lambda x: not query in str(x).lower().any())
                 st.write('here')
                 st.write(mask)
                 reads_use = reads_use[mask]
