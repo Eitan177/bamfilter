@@ -9,7 +9,8 @@ def convert_df(df,topofsam):
     topofsam='\n'.join(topofsam)
     df.rename(columns={'0':topofsam},inplace=True)
     return df.to_csv(index=False,header=False,sep='\t').encode('utf-8')
-def filterdown(reads_use,posorneg,query)    
+    
+def filterdown(reads_use,posorneg,query):    
     if posorneg =='In':
         mask = reads_use.map(lambda x: query in str(x).lower()).any(axis=1)
         reads_use = reads_use[mask] 
