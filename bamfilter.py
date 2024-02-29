@@ -49,7 +49,7 @@ if submitted:
             if posorneg =='In':
                 mask = reads_use.applymap(lambda x: query in str(x).lower()).any(axis=1)
             else:
-               mask = reads_use.applymap(lambda x: not query in str(x).lower()).any(axis=1) 
+               mask = reads_use.applymap(lambda x: query not in str(x).lower()).any(axis=1) 
             reads_use = reads_use[mask]    
         st.data_editor(reads_use)
         reads_use=convert_df(reads_use,mm)   
