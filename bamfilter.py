@@ -14,7 +14,15 @@ with st.form(key='file upload'):
     # Add form elements
     uploaded_file = st.file_uploader("Upload a sam file")
     selected_option = st.multiselect('Select options for filtering', ['softclip', 'deletion', 'insertion'],['softclip'])
+    query = st.text_input("Filter dataframe")
+    posorneg = st.radio('filter type',['In','Not in'])
 
+
+st.data_editor(
+    df,
+    hide_index=True, 
+    column_order=("Par","Cat1","Cat2")
+) 
     # Add a form submit button
     submitted = st.form_submit_button('Submit')
 mm=[]
@@ -44,6 +52,12 @@ if submitted:
             reads_use=pd.concat([reads_use,new_df.loc[new_df['5'].str.contains('D')]])  
         if 'insertion' in selected_option:
             reads_use=pd.concat([reads_use,new_df.loc[new_df['5'].str.contains('I')]]) 
+        if query:
+            if posorneg ==' In':
+                mask = reads_use.applymap(lambda x: query in str(x).lower()).any(axis=1)
+            else:
+               mask = reads_use.applymap(lambda x: not query in str(x).lower()).any(axis=1) 
+            reads_use = reads_use[mask]    
         st.data_editor(reads_use)
         reads_use=convert_df(reads_use,mm)   
         
