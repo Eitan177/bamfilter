@@ -16,13 +16,6 @@ with st.form(key='file upload'):
     selected_option = st.multiselect('Select options for filtering', ['softclip', 'deletion', 'insertion'],['softclip'])
     query = st.text_input("Filter dataframe")
     posorneg = st.radio('filter type',['In','Not in'])
-
-
-st.data_editor(
-    df,
-    hide_index=True, 
-    column_order=("Par","Cat1","Cat2")
-) 
     # Add a form submit button
     submitted = st.form_submit_button('Submit')
 mm=[]
