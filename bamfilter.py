@@ -47,11 +47,13 @@ if submitted:
             reads_use=pd.concat([reads_use,new_df.loc[new_df['5'].str.contains('I')]]) 
         if query:
             if posorneg =='In':
-                mask = reads_use.applymap(lambda x: query in str(x).lower()).any(axis=1)
+                mask = reads_use.map(lambda x: query in str(x).lower()).any(axis=1)
                 reads_use = reads_use[mask] 
+                st.write(mask)
             else:
-               mask = reads_use.applymap(lambda x: query in str(x).lower()).any(axis=1) 
-               reads_use = pd.merge(reads_use,reads_use[mask], how='left') 
+               mask = reads_use.map(lambda x: query in str(x).lower()).any(axis=1) 
+                st.write(mask)
+                reads_use = pd.merge(reads_use,reads_use[mask], how='left') 
         st.data_editor(reads_use)
         st.write(reads_use.shape)
         reads_use=convert_df(reads_use,mm)   
